@@ -12,6 +12,6 @@
 
 <p>You can also navigate this site with the arrows keys (&larr; &rarr;) of your keyboard.</p>
 
-<p>For the geeks among you, this project is hosted on <a href="http://neofyt.github.io/test/">Github<b></b></a> so contributions are welcome ;)</p>
+<p>For the geeks among you, this project is hosted on <a href="https://github.com/Neofyt/adoctorwhoquoteaday.com">Github<b></b></a> so contributions are welcome ;)</p>
 
 <footer>Neofyt - 2013</footer>

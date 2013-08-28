@@ -48,7 +48,7 @@ var d = document,
 	today = new Date(),
 	todayStr = today.yyyymmdd(),
 	todayInt = parseInt(todayStr),
-	initDate = 20130828,
+	initDate = 20130828, // Halima's birthday :)
 	content,
 	loaded,
 	canvas = d.getElementsByTagName('canvas')[0],
