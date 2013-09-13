@@ -80,7 +80,7 @@ function setHash(param){
 		w.location.hash = param;
 	} else {
 		hash = w.location.hash.replace("#","");
-		if(!hash || !hash.match(/^(\d{8}|about)/)){
+		if(!hash || !hash.match(/^(\d{8}|about|today)/)){
 			w.location.hash = todayInt;
 		}
 	}
