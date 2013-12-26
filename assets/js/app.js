@@ -9,16 +9,10 @@ function k(c, f, p){
 	if (w.c === c) f(p);
 }
 
-Date.prototype.yyyymmdd = function() {
-	var yyyy = this.getFullYear().toString(),
-	mm = (this.getMonth()+1).toString(), // getMonth() is zero-based
-	dd  = this.getDate().toString();
-	return yyyy + (mm[1]?mm:"0"+mm[0]) + (dd[1]?dd:"0"+dd[0]); // padding
-};
-
-String.prototype.toDate = function(){
-	return this.substring(0,4) + "," + this.substring(4,6) + "," + this.substring(6,8);
-};
+Date.prototype.getDOY = function() {
+	var onejan = new Date(this.getFullYear(),0,1);
+	return Math.ceil((this - onejan) / 86400000);
+}
 
 // Browser sniffing
 var ua = (function(){
@@ -46,9 +40,7 @@ var d = document,
 	w = window,
 	converter = new Showdown.converter(),
 	today = new Date(),
-	todayStr = today.yyyymmdd(),
-	todayInt = parseInt(todayStr),
-	initDate = 20130828, // Halima's birthday :)
+	todayInt = today.getDOY(),
 	content,
 	loaded,
 	canvas = d.getElementsByTagName('canvas')[0],
@@ -64,14 +56,13 @@ canvas.width = canvas.height = 16;
 
 function navDate(param){
 	var hash = w.location.hash.replace("#",""),
-		hash = (hash.match(/^\d{8}/)) ? hash : loaded,
+		hash = (hash.match(/^\d{1,3}/)) ? hash : loaded,
 		hashInt = parseInt(hash);
 
-	if((hashInt < todayInt && param == 1) || (hashInt > initDate && param == -1)){
-		result = (hash) ? new Date(hash.toDate()) : today;
-		result.setDate(result.getDate() + param);
+	if((hashInt < todayInt && param == 1) || (hashInt > 1 && param == -1)){
+		result = (hash) ? parseInt(hash) : todayInt;
 
-		w.location.hash = result.yyyymmdd();
+		w.location.hash = result + param;
 	}
 }
 
@@ -80,14 +71,14 @@ function setHash(param){
 		w.location.hash = param;
 	} else {
 		hash = w.location.hash.replace("#","");
-		if(!hash || !hash.match(/^(\d{8}|about|today)/)){
+		if(!hash || !hash.match(/^(\d{1,3}|about|today)$/)){
 			w.location.hash = todayInt;
 		}
 	}
 }
 
-function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+function randomDay(){
+	return Math.floor(Math.random() * 365) + 1;
 }
 
 function load(what){
@@ -96,7 +87,7 @@ function load(what){
 	} else if (w.ActiveXObject){ // Internet Explorer
 		xhr = new ActiveXObject("Microsoft.XMLHTTP");
 	} else {
-		return;
+		return "_&nbsp;_ _This site is not compatible with your browser. Sorry._";
 	}
 
 	xhr.open("GET", what, false);
@@ -106,7 +97,8 @@ function load(what){
 		if(xhr.status == 200){
 			return xhr.responseText;
 		} else {
-			//info("nf");
+			//return "_&nbsp;_ _File not found. Please come back later._";
+			return "_&nbsp;_ _Site will open on January, 1st 2014._";
 		}
 	}
 }
@@ -114,25 +106,28 @@ function load(what){
 function run(){
 
 	var xhr = null,
-		id = w.location.hash.replace("#","");
+		id = w.location.hash.replace("#",""),
+		idInt;
 
 	$("section").innerHTML = "";
 	drawFavicon("");
 
 	switch(id){
 		case "random":
-			id = randomDate(new Date(2013, 7, 28), new Date()).yyyymmdd();
+			id = randomDay().toString();
 			break;
 		case "today":
-	 		id = todayStr;
+	 		id = todayInt.toString();
 	 		break;
 		default:
 			id = id;
 	}
 
-	if(id.match(/^\d{8}$/)){
+	idInt = parseInt(id);
+
+	if(id.match(/^\d{1,3}$/)){
 		loaded = id;
-		drawFavicon(id.substring(6,8));
+		drawFavicon(id);
 		content = load("quotes/" + id + ".md");
 		$("section").innerHTML = converter.makeHtml(content);
 	}
@@ -142,24 +137,23 @@ function run(){
 	}
 
 	$("nav").style.display = (id.match(/^about$/)) ? "none" : "block";
-	$("[alt=Previous]").style.opacity = (id.match(/^\d{8}$/) && id == initDate) ? 0 : 0.6 ;
-	$("[alt=Next]").style.opacity = (id.match(/^\d{8}$/) && id == todayInt) ? 0 : 0.6 ;
+	$("[alt=Previous]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == 0) ? 0 : 0.6 ;
+	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? 0 : 0.6 ;
 }
 
 function drawFavicon(day) {
-	// Génération du canvas
+	
 	ctx.clearRect(0, 0, 16, 16);
 
-	ctx.beginPath();
-	ctx.arc(8,8,8,0,2*Math.PI, false); //ctx.arc(x,y,radius,startAngle,endAngle, anticlockwise);
+	ctx.fillStyle = "#fff";
+	ctx.fillRect(0, 0, 16, 3);
 	ctx.fillStyle = "#272d70";
-	ctx.fill();
+	ctx.fillRect(0, 3, 16, 13);
 
 	ctx.fillStyle = "#fff";
 	ctx.font = "6pt Arial";
-	ctx.fillText(day, 4, 11);
+	ctx.fillText(day, 2, 12);
 
-	// Génération du lien
 	if (browser.chrome){
 		$('[rel="shortcut icon"]').setAttribute("href", canvas.toDataURL());
 	} else {

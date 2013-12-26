@@ -4,7 +4,7 @@
 
 <h3>Why ?</h3>
 
-<p>Because... I... am... a... fan !! And if you are here you already know that the 50th anniversary of Doctor WHO is coming this year. I thought I had to do something to celebrate it. So here it is, a little site with no other pretention than listing some of the most famous or not so famous quotes of Doctor WHO.</p>
+<p>Because I am a fan !! And I thought I had to do something to celebrate the 50th anniversary of Doctor WHO. So here it is, a little site with no other pretention than listing some of the most famous or not so famous quotes of Doctor WHO.</p>
 
 <br /><br />
 
