@@ -9,7 +9,7 @@ function k(c, f, p){
 	if (w.c === c) f(p);
 }
 
-Date.prototype.getDOY = function() {
+Date.prototype.getDOY = function(){
 	var onejan = new Date(this.getFullYear(),0,1);
 	return Math.ceil((this - onejan) / 86400000);
 }
@@ -56,7 +56,7 @@ canvas.width = canvas.height = 16;
 
 function navDate(param){
 	var hash = w.location.hash.replace("#",""),
-		hash = (hash.match(/^\d{1,3}/)) ? hash : loaded,
+		hash = (hash.match(/^\d{1,3}$/)) ? hash : loaded,
 		hashInt = parseInt(hash);
 
 	if((hashInt < todayInt && param == 1) || (hashInt > 1 && param == -1)){
@@ -71,18 +71,18 @@ function setHash(param){
 		w.location.hash = param;
 	} else {
 		hash = w.location.hash.replace("#","");
-		if(!hash || !hash.match(/^(\d{1,3}|about|today)$/)){
+		if(!hash || !hash.match(/^(\d{1,3}|about|today)$/) || (hash.match(/^\d{1,3}$/) && parseInt(hash) > todayInt)) {
 			w.location.hash = todayInt;
 		}
 	}
 }
 
 function randomDay(){
-	return Math.floor(Math.random() * 365) + 1;
+	return Math.floor(Math.random() * todayInt) + 1;
 }
 
 function load(what){
-	if (w.XMLHttpRequest){ // Firefox
+	if (w.XMLHttpRequest){
 		xhr = new XMLHttpRequest();
 	} else if (w.ActiveXObject){ // Internet Explorer
 		xhr = new ActiveXObject("Microsoft.XMLHTTP");
@@ -132,7 +132,7 @@ function run(){
 		$("section").innerHTML = converter.makeHtml(content);
 	}
 	else if(id.match(/^about$/)){
-		content = load(id + ".md");
+		content = load("readme.md");
 		$("section").innerHTML = content;
 	}
 
@@ -141,8 +141,8 @@ function run(){
 	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? 0 : 0.6 ;
 }
 
-function drawFavicon(day) {
-	
+function drawFavicon(n){
+
 	ctx.clearRect(0, 0, 16, 16);
 
 	ctx.fillStyle = "#fff";
@@ -150,9 +150,13 @@ function drawFavicon(day) {
 	ctx.fillStyle = "#272d70";
 	ctx.fillRect(0, 3, 16, 13);
 
+	if (n !== ""){
+		n = n[2] ? n : "0" + (n[1] ? n : "0" + n[0]);
+	}
+
 	ctx.fillStyle = "#fff";
 	ctx.font = "6pt Arial";
-	ctx.fillText(day, 2, 12);
+	ctx.fillText(n, 2, 12);
 
 	if (browser.chrome){
 		$('[rel="shortcut icon"]').setAttribute("href", canvas.toDataURL());
@@ -183,7 +187,7 @@ d.onkeyup = function(e){
 	k(39, navDate, 1); // Right
 };
 
-w.onhashchange = function() {
+w.onhashchange = function(){
 	run();
 };
 
