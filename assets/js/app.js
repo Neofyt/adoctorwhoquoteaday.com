@@ -97,8 +97,7 @@ function load(what){
 		if(xhr.status == 200){
 			return xhr.responseText;
 		} else {
-			//return "_&nbsp;_ _File not found. Please come back later._";
-			return "_&nbsp;_ _Site will open on January, 1st 2014._";
+			return "_&nbsp;_ _Quote not found._";
 		}
 	}
 }
@@ -137,7 +136,7 @@ function run(){
 	}
 
 	$("nav").style.display = (id.match(/^about$/)) ? "none" : "block";
-	$("[alt=Previous]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == 0) ? 0 : 0.6 ;
+	$("[alt=Previous]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == 1) ? 0 : 0.6 ;
 	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? 0 : 0.6 ;
 }
 
