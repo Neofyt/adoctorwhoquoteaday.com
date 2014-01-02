@@ -4,7 +4,8 @@
 
 <h3>Why ?</h3>
 
-<p>Because I am a fan !! And I thought I had to do something to celebrate the 50th anniversary of Doctor WHO. So here it is, a little site with no other pretention than listing some of the most famous or not so famous quotes of Doctor WHO. Each day a new quote is be published and you can navigate through all the already published quotes via the arrows (or by using the arrows keys (&larr; &rarr;) of your keyboard).</p>
+<p>Because I am a fan !! And I thought I had to do something to celebrate the 50th anniversary of Doctor WHO. So here it is, a little site with no other pretention than listing some of the most famous or not so famous quotes of Doctor WHO.<br />
+Each day a new quote will be published <i>(hence the name...)</i>. You can also navigate through all the already published quotes via the arrows (or by using the arrows keys (&larr; &rarr;) of your keyboard).</p>
 
 <br /><br />
 
