@@ -103,6 +103,7 @@ function load(what){
 }
 
 function run(){
+	setHash();
 
 	var xhr = null,
 		id = w.location.hash.replace("#",""),
