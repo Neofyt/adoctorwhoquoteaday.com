@@ -71,10 +71,16 @@ function setHash(param){
 		w.location.hash = param;
 	} else {
 		hash = w.location.hash.replace("#","");
-		if(!hash || !hash.match(/^(\d{1,3}|about|today)$/) || (hash.match(/^\d{1,3}$/) && parseInt(hash) > todayInt)) {
+		if(!hash || !hash.match(/^(\d{1,3}|about|today|random)$/) || (hash.match(/^\d{1,3}$/) && parseInt(hash) > todayInt)) {
 			w.location.hash = todayInt;
 		}
 	}
+}
+
+function refresh(){
+	var today = new Date(),
+		todayInt = today.getDOY();
+	run(todayInt);
 }
 
 function randomDay(){
@@ -102,11 +108,11 @@ function load(what){
 	}
 }
 
-function run(){
-	setHash();
+function run(param){
+	setHash(param);
 
 	var xhr = null,
-		id = w.location.hash.replace("#",""),
+		id = param || w.location.hash.replace("#",""),
 		idInt;
 
 	$("section").innerHTML = "";
@@ -114,14 +120,16 @@ function run(){
 
 	switch(id){
 		case "random":
-			id = randomDay().toString();
+			id = randomDay();
 			break;
 		case "today":
-	 		id = todayInt.toString();
+	 		id = todayInt;
 	 		break;
 		default:
 			id = id;
 	}
+
+	id = id.toString();
 
 	idInt = parseInt(id);
 
@@ -179,12 +187,14 @@ function drawFavicon(n){
 // ============
 
 
-d.onkeyup = function(e){
+d.onkeydown = function(e){
 	e.preventDefault();
 	w.c = e.keyCode;
 
 	k(37, navDate, -1); // Left
 	k(39, navDate, 1); // Right
+
+	k(116, refresh); // F5
 };
 
 w.onhashchange = function(){
