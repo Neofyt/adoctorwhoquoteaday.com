@@ -2,16 +2,17 @@
 // HELPERS
 // ============
 
-
+// Selector
 function $(expr) { return d.querySelector(expr); }
 
+// Key binding
 function k(c, f, p){
 	if (w.c === c) f(p);
 }
 
+// Get current day number
 Date.prototype.getDOY = function(){
-	var onejan = new Date(this.getFullYear(),0,1);
-	return Math.ceil((this - onejan) / 86400000);
+	return Math.ceil((this - new Date(this.getFullYear(),0,1)) / 86400000);
 }
 
 // Browser sniffing
