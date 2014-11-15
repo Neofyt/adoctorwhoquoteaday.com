@@ -46,7 +46,7 @@ var d = document,
 	loaded,
 	canvas = d.getElementsByTagName('canvas')[0],
 	ctx = canvas.getContext('2d'),
-	lastId = 156; // replacing todayInt as long as there is not enough quotes to cover a year
+	lastId = 158; // replacing todayInt as long as there is not enough quotes to cover a year
 
 canvas.width = canvas.height = 16;
 
