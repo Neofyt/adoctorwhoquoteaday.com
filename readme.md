@@ -13,4 +13,4 @@ Each day a new quote will be published <i>(hence the name...)</i>. You can also 
 
 <p>For the geeks among you, this project is hosted on <a href="https://github.com/Neofyt/adoctorwhoquoteaday.com">Github<b></b></a> so contributions are welcome ;)</p>
 
-<footer>Neofyt - 2014</footer>
+<footer>Neofyt - 2015</footer>

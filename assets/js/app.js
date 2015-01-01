@@ -40,13 +40,12 @@ var browser = {
 var d = document,
 	w = window,
 	converter = new Showdown.converter(),
-	//today = new Date(),
-	//todayInt = today.getDOY(),
+	today = new Date(),
+	todayInt = today.getDOY(),
 	content,
 	loaded,
 	canvas = d.getElementsByTagName('canvas')[0],
-	ctx = canvas.getContext('2d'),
-	lastId = 158; // replacing todayInt as long as there is not enough quotes to cover a year
+	ctx = canvas.getContext('2d');
 
 canvas.width = canvas.height = 16;
 
@@ -61,8 +60,8 @@ function navDate(param){
 		hash = (hash.match(/^\d{1,3}$/)) ? hash : loaded,
 		hashInt = parseInt(hash);
 
-	if((hashInt < lastId && param == 1) || (hashInt > 1 && param == -1)){
-		result = (hash) ? parseInt(hash) : lastId;
+	if((hashInt < todayInt && param == 1) || (hashInt > 1 && param == -1)){
+		result = (hash) ? parseInt(hash) : todayInt;
 
 		w.location.hash = result + param;
 	}
@@ -73,20 +72,20 @@ function setHash(param){
 		w.location.hash = param;
 	} else {
 		hash = w.location.hash.replace("#","");
-		if(!hash || !hash.match(/^(\d{1,3}|about|today|random)$/) || (hash.match(/^\d{1,3}$/) && parseInt(hash) > lastId)) {
-			w.location.hash = lastId;
+		if(!hash || !hash.match(/^(\d{1,3}|about|today|random)$/) || (hash.match(/^\d{1,3}$/) && parseInt(hash) > todayInt)) {
+			w.location.hash = todayInt;
 		}
 	}
 }
 
 function refresh(){
-	//var today = new Date(),
-	//	todayInt = today.getDOY();
-	run(lastId);
+	var today = new Date(),
+		todayInt = today.getDOY();
+	run(todayInt);
 }
 
 function randomDay(){
-	return Math.floor(Math.random() * lastId) + 1;
+	return Math.floor(Math.random() * todayInt) + 1;
 }
 
 function load(what){
@@ -124,9 +123,9 @@ function run(param){
 		case "random":
 			id = randomDay();
 			break;
-		//case "today":
-	 	//	id = todayInt;
-	 	//	break;
+		case "today":
+			id = todayInt;
+			break;
 		default:
 			id = id;
 	}
@@ -148,7 +147,7 @@ function run(param){
 
 	$("nav").style.display = (id.match(/^about$/)) ? "none" : "block";
 	$("[alt=Previous]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == 1) ? 0 : 0.6 ;
-	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == lastId) ? 0 : 0.6 ;
+	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? 0 : 0.6 ;
 }
 
 function drawFavicon(n){
