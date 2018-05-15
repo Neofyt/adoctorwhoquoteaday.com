@@ -97,7 +97,7 @@ function load(what){
 		return "_&nbsp;_ _This site is not compatible with your browser. Sorry._";
 	}
 
-	xhr.open("GET", what, true);
+	xhr.open("GET", what, false);
 	xhr.send(null);
 
 	if (xhr.readyState == 4){
