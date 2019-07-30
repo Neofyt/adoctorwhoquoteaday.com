@@ -148,6 +148,9 @@ function run(param){
 	$("nav").style.display = (id.match(/^about$/)) ? "none" : "block";
 	$("[alt=Previous]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == 1) ? 0 : 0.6 ;
 	$("[alt=Next]").style.opacity = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? 0 : 0.6 ;
+
+	$("[alt=Previous]").style.cursor = (id.match(/^\d{1,3}$/) && idInt == 1) ? "default" : "pointer" ;
+	$("[alt=Next]").style.cursor = (id.match(/^\d{1,3}$/) && idInt == todayInt) ? "default" : "pointer" ;
 }
 
 function drawFavicon(n){
